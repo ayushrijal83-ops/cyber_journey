@@ -91,7 +91,7 @@ cyber_journey/
 
 | Platform | Completed | Target |
 |---|---|---|
-| OverTheWire Bandit | 0 | 20 levels |
+| OverTheWire Bandit | 20 | 20 levels |
 | PicoCTF | 0 | 20+ problems |
 | HackTheBox | 0 | 5+ machines |
 
