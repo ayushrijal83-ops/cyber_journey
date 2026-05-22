@@ -49,9 +49,10 @@ cyber_journey/
 │   │   ├── 04-grep-and-piping.md
 │   │   ├── 05-find-command.md
 │   │   └── 06-enumeration.md
-|    |    |___07-Shell & Bash Configuration
+|   |   |___07-Shell & Bash Configuration.md
+|   |   |___08_Disk_Usages.md
 │   └── practice/
-│
+│   
 ├── 02-Networking/
 │   └── notes/
 │
