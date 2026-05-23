@@ -51,6 +51,7 @@ cyber_journey/
 │   │   └── 06-enumeration.md
 |   |   |___07-Shell & Bash Configuration.md
 |   |   |___08_Disk_Usages.md
+|   |   |___09_File-Compression-&-tar
 │   └── practice/
 │   
 ├── 02-Networking/
