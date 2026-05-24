@@ -52,6 +52,10 @@ cyber_journey/
 |   |   |___07-Shell & Bash Configuration.md
 |   |   |___08_Disk_Usages.md
 |   |   |___09_File-Compression-&-tar
+|   |   |___10_users_groups_visudo
+|   |   |___11_
+|   |   |___12_
+|   |   |___13_
 │   └── practice/
 │   
 ├── 02-Networking/
