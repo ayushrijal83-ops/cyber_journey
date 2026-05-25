@@ -23,8 +23,8 @@
 
 | # | Phase | Topics | Status |
 |---|---|---|---|
-| 1 | 🐧 Linux Basics | Terminal, file system, permissions, SSH, Bandit | 🔄 In Progress |
-| 2 | 🌐 Networking | DNS, TCP/IP, HTTP, Wireshark | ⏳ Not Started |
+| 1 | 🐧 Linux Basics | Terminal, file system, permissions, SSH, Bandit | 🤕finished |
+| 2 | 🌐 Networking | DNS, TCP/IP, HTTP, Wireshark | 🔄 In Progress |
 | 3 | 🐍 Python | Scripting, sockets, automation | ⏳ Not Started |
 | 4 | 🕷️ Web Security | OWASP Top 10, SQLi, XSS, Burp Suite | ⏳ Not Started |
 | 5 | 🔐 Cryptography | Hashing, encoding, RSA basics | ⏳ Not Started |
