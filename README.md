@@ -49,11 +49,11 @@ cyber_journey/
 │   │   ├── 04-grep-and-piping.md
 │   │   ├── 05-find-command.md
 │   │   └── 06-enumeration.md
-|   |   |___07-Shell & Bash Configuration.md
+|   |   |___07-Shell-&-Bash-Configuration.md
 |   |   |___08_Disk_Usages.md
-|   |   |___09_File-Compression-&-tar
-|   |   |___10_users_groups_visudo
-|   |   |___11_
+|   |   |___09_File-Compression-&-tar.md
+|   |   |___10_users_groups_visudo.md
+|   |   |___11_package-management.md
 |   |   |___12_
 |   |   |___13_
 |   |   |___14_
