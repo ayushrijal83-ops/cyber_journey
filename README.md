@@ -57,6 +57,8 @@ cyber_journey/
 |   |   |___12_services-daemons-systemd.md
 |   |   |___13_KILL-Linux-processes!!(also-manage-them).md
 |   |   |___14_2 cool-(web)things-to-do-in-Linux
+|   |   |___15_linux-terminal-hacks.md
+|   |   |___16_
 │   └── practice/
 │   
 ├── 02-Networking/
