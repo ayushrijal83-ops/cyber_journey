@@ -64,6 +64,7 @@ cyber_journey/
 ├── 02-Networking/
 │   └── notes/
 |       |___01-switches-hubs-access-points.md
+|       |___02-Router_Networking_Notes.md
 │
 ├── 03-Python/
 │   └── scripts/
