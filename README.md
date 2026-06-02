@@ -65,7 +65,8 @@ cyber_journey/
 │   └── notes/
 |       |___01-switches-hubs-access-points.md
 |       |___02-Router_Networking_Notes.md
-│
+│       |___03_TTCPIP_OSI_overview.md
+|       |___04_TCPIP_OSI_Layers.md
 ├── 03-Python/
 │   └── scripts/
 │
