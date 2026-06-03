@@ -1,16 +1,3 @@
-# 🧠 How the OSI Model Works on YouTube  
-## 📡 Application & Transport Layers – FREE CCNA // EP 5  
-**By NetworkChuck** – *Detailed Video Notes*
-
----
-
-## 🎯 Core Question
-
-> **When you watch a YouTube video, does it use TCP or UDP?**
-
-The answer: **Both** – but for completely different parts of the experience.
-
----
 
 ## 🧱 Layers Focused in This Episode
 
