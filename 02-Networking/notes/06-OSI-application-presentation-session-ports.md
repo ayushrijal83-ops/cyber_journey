@@ -1,6 +1,6 @@
 # 🌐 OSI Model — Application, Presentation, Session Layers & Ports
 
-> **Phase:** Networking | **Topic:** 03 | **Status:** ✅ Completed
+> **Phase:** Networking | **Topic:** 06 | **Status:** ✅ Completed
 
 ---
 
