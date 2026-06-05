@@ -67,6 +67,8 @@ cyber_journey/
 |       |___02-Router_Networking_Notes.md
 │       |___03_TTCPIP_OSI_overview.md
 |       |___04_TCPIP_OSI_Layers.md
+|       |___
+|       |___06-OSI-application-presentation-session-ports.md
 ├── 03-Python/
 │   └── scripts/
 │
