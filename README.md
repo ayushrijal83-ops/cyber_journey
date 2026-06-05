@@ -99,6 +99,7 @@ cyber_journey/
 - ✅ [Grep & Piping](./01-Linux/notes/04-grep-and-piping.md)
 - ✅ [Find Command](./01-Linux/notes/05-find-command.md)
 - ✅ [Enumerating Distribution & Kernel Info](./01-Linux/notes/06-enumeration.md)
+- 02-Networking/notes/01-switches-hubs-access-points.md
 
 ---
 
