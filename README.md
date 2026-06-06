@@ -68,7 +68,11 @@ cyber_journey/
 │       |___03_TTCPIP_OSI_overview.md
 |       |___04_TCPIP_OSI_Layers.md
 |       |___05_How_the_OSI_Model_Works.md
-|       |___06-OSI-application-presentation-session-ports.md
+|       |___06-OSI-application-presentation-
+|       |___07-
+|       |___08-
+|       |___09-
+session-ports.md
 ├── 03-Python/
 │   └── scripts/
 │
