@@ -69,7 +69,7 @@ cyber_journey/
 |       |___04_TCPIP_OSI_Layers.md
 |       |___05_How_the_OSI_Model_Works.md
 |       |___06-OSI-application-presentation-
-|       |___07-
+|       |___07-network-design-tiers.md
 |       |___08-
 |       |___09-
 session-ports.md
