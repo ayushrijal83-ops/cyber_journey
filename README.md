@@ -70,7 +70,7 @@ cyber_journey/
 |       |___05_How_the_OSI_Model_Works.md
 |       |___06-OSI-application-presentation-
 |       |___07-network-design-tiers.md
-|       |___08-
+|       |___08-data-center-networks-spine-leaf.md
 |       |___09-
 session-ports.md
 ├── 03-Python/
