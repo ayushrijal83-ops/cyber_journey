@@ -1,7 +1,6 @@
 # 🏢 Data Center Networks — Spine-Leaf Architecture
 
-> **Phase:** Networking | **Topic:** 05 | **Status:** ✅ Completed  
-> **Source:** NetworkChuck FREE CCNA EP 7
+
 
 ---
 
