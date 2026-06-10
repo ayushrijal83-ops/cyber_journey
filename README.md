@@ -72,6 +72,7 @@ cyber_journey/
 |       |___07-network-design-tiers.md
 |       |___08-data-center-networks-spine-leaf.md
 |       |___09-IpAddress.md
+|       |___10-IPv4-exhaustion-NAT-IPv6.md
 session-ports.md
 ├── 03-Python/
 │   └── scripts/
