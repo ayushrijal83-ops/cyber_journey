@@ -59,6 +59,9 @@ cyber_journey/
 |   |   |___14_2 cool-(web)things-to-do-in-Linux
 |   |   |___15_linux-terminal-hacks.md
 │   └── practice/
+|       |___passwords__from_2_to _2.md
+|       |___Bandit_2_13.md
+|       |___
 |       |___
 │   
 ├── 02-Networking/
