@@ -75,6 +75,7 @@ cyber_journey/
 │       ├── 06-IP-addresses.md
 │       ├── 07-IPv4-exhaustion-NAT-IPv6.md
 │       └── 08-subnetting-binary-decimal.md
+|       |__09-subnet-mask.md
 │
 ├── 03-Python/
 │   └── scripts/
