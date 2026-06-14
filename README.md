@@ -81,6 +81,11 @@ cyber_journey/
 |       |___15-subneting-4.md
 |       |___16-subneting-5.md
 |       |___ccna_ep2.pkz
+|
+|──2.1-NMAP
+|   |___
+|   |___
+|   |___
 │
 ├── 03-Python/
 │   └── scripts/
