@@ -77,6 +77,10 @@ cyber_journey/
 │       └── 08-subnetting-binary-decimal.md
 |       |__09-subnet-mask.md
 |       |__10-subneting-2.md
+|       |___14-subneting-3.md
+|       |___15-subneting-4.md
+|       |___16-subneting-5.md
+|       |___ccna_ep2.pkz
 │
 ├── 03-Python/
 │   └── scripts/
