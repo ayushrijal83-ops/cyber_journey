@@ -83,7 +83,7 @@ cyber_journey/
 |       |___ccna_ep2.pkz
 |
 |──2.1-NMAP
-|   |___
+|   |___01-part1.md
 |   |___
 |   |___
 │
