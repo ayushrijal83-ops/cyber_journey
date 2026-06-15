@@ -1,286 +1,671 @@
-# 🔍 Nmap — Complete Guide (Original + Detailed)
+# 🔍 Nmap — Complete Guide
 
-> **Phase:** Networking | **Topic:** 11 | **Status:** ✅ Completed  
-> **Sources:** TryHackMe – Nmap & Further Nmap rooms + industry best practices
-
----
-
-## What is Nmap?
-
-Nmap (Network Mapper) is the **most used port scanning tool** in cybersecurity. It's open source, free, and packed with features including its own scripting engine.
-
-**Why we use it:**
-- Every attack starts with information gathering
-- Find open ports on a target
-- Detect what services are running
-- Detect the operating system
-- Find vulnerabilities using scripts
+> **Phase:** Networking
+> **Topic:** 11 — Nmap
+> **Status:** ✅ Completed
+> **Sources:** TryHackMe Nmap, Further Nmap, Industry Best Practices
 
 ---
 
-## Ports — Quick Recap
+# What is Nmap?
 
-Every computer has **65,535 ports** available.
+**Nmap (Network Mapper)** is the most widely used network scanning and reconnaissance tool in cybersecurity.
 
-- **Ports 0–1023** = Well-known ports (HTTP=80, HTTPS=443, SSH=22)
-- **Ports 1024–49151** = Registered ports (applications)
-- **Ports 49152–65535** = Dynamic ports (assigned automatically by your OS)
+It is:
 
-When you open multiple browser tabs — your OS automatically assigns different dynamic port numbers for each connection. That's how one device can talk to multiple websites simultaneously.
+* Free and open source
+* Fast and highly customizable
+* Capable of host discovery
+* Able to identify open ports
+* Detect service versions
+* Detect operating systems
+* Run vulnerability checks through NSE scripts
 
----
+## Why Pentesters Use Nmap
 
-## TCP Flags – The Secret Sauce
+Every attack begins with information gathering.
 
-Nmap manipulates TCP header flags to create different scan types. The 6 standard flags:
+Nmap helps you:
 
-| Flag | Name | Function |
-|------|------|----------|
-| **SYN** | Synchronize | Initiates a connection |
-| **ACK** | Acknowledgment | Confirms receipt of data |
-| **RST** | Reset | Abruptly terminates a connection |
-| **FIN** | Finish | Gracefully ends a connection |
-| **PSH** | Push | Forces data delivery |
-| **URG** | Urgent | Marks data as high priority |
-
----
-
-## Scan Types
-
-### 3 Main Scan Types
-
-| Scan | Flag | How it works |
-|---|---|---|
-| TCP Connect | `-sT` | Completes full 3-way handshake — noisy but reliable |
-| SYN (Half-open) | `-sS` | Sends SYN, doesn't complete handshake — stealthier |
-| UDP | `-sU` | Scans UDP ports — slower but important |
-
-
-### Less Common Scan Types
-
-| Scan | Flag | Purpose |
-|---|---|---|
-| TCP Null | `-sN` | Sends packet with no flags — evades some firewalls |
-| TCP FIN | `-sF` | Sends FIN flag only — evades some firewalls |
-| TCP Xmas | `-sX` | Sends FIN, PSH, URG flags — evades some firewalls |
-| TCP Maimon | `-sM` | FIN+ACK — works on some BSD systems |
-| ACK scan | `-sA` | Maps firewall rules |
-| Window scan | `-sW` | Same as ACK on some systems |
-| Idle (zombie) scan | `-sI zombieIP` | Ultimate stealth – no direct contact |
-| ICMP/Ping | `-sn` | Discovers live hosts — no port scan |
-
-
-### How Different Scans Behave on Open/Closed Ports
-
-| Scan Type | **Open Port** | **Closed Port** |
-|-----------|---------------|-----------------|
-| SYN (-sS) | SYN‑ACK → RST | RST |
-| Connect (-sT) | Completes handshake | RST after SYN |
-| Null/FIN/Xmas | No response | RST |
-| ACK (-sA) | RST | RST (but firewall may drop) |
-
-> ✅ Null, FIN, Xmas scans fail on Windows (always send RST). Use SYN scans for Windows targets.
+* Discover live hosts
+* Find open ports
+* Identify running services
+* Determine software versions
+* Detect operating systems
+* Discover potential vulnerabilities
 
 ---
 
-## Key Flags — The Most Important Ones
+# Ports — Quick Recap
 
-### Scan Type Flags
+Every TCP/IP-enabled device has **65,535 ports**.
+
+| Range       | Type                    | Purpose                              |
+| ----------- | ----------------------- | ------------------------------------ |
+| 0–1023      | Well-Known Ports        | Standard services (HTTP, SSH, HTTPS) |
+| 1024–49151  | Registered Ports        | Application-specific services        |
+| 49152–65535 | Dynamic/Ephemeral Ports | Temporary client connections         |
+
+### Common Examples
+
+| Port | Service |
+| ---- | ------- |
+| 21   | FTP     |
+| 22   | SSH     |
+| 23   | Telnet  |
+| 25   | SMTP    |
+| 53   | DNS     |
+| 80   | HTTP    |
+| 443  | HTTPS   |
+| 445  | SMB     |
+| 3306 | MySQL   |
+| 3389 | RDP     |
+
+---
+
+# TCP Flags — The Secret Sauce
+
+Nmap creates different scan types by manipulating TCP flags.
+
+| Flag | Name           | Purpose                             |
+| ---- | -------------- | ----------------------------------- |
+| SYN  | Synchronize    | Starts a connection                 |
+| ACK  | Acknowledgment | Confirms received data              |
+| RST  | Reset          | Immediately terminates a connection |
+| FIN  | Finish         | Gracefully closes a connection      |
+| PSH  | Push           | Delivers buffered data immediately  |
+| URG  | Urgent         | Marks urgent data                   |
+
+---
+
+# Major Scan Types
+
+## TCP Connect Scan (-sT)
+
+Performs a full TCP three-way handshake.
+
+```text
+Client → SYN
+Server → SYN-ACK
+Client → ACK
+```
+
+### Advantages
+
+* Reliable
+* Works without root privileges
+
+### Disadvantages
+
+* Easy to detect
+* Appears in application logs
 
 ```bash
-nmap -sS IP        # SYN scan (default when root — stealthiest)
-nmap -sT IP        # TCP Connect scan (default without root)
-nmap -sU IP        # UDP scan
-nmap -sn IP        # Ping scan — just find live hosts, no ports
-Port Flags
-bash
-nmap -p 80 IP           # Scan specific port (port 80 only)
-nmap -p 80,443,22 IP    # Multiple specific ports
-nmap -p 20-100 IP       # Scan a range of ports
-nmap -p- IP             # Scan ALL 65,535 ports
-nmap --top-ports 100 IP # Most common 100 ports
-Detection Flags
-bash
-nmap -O IP         # OS detection — what operating system is the target running?
-nmap -sV IP        # Service version detection — what version of each service?
-nmap -A IP         # Aggressive mode — OS + version + traceroute + scripts
-Verbosity Flags
-bash
-nmap -v IP         # Verbose — more output
-nmap -vv IP        # Very verbose — even more output
-Timing Flags
-bash
-nmap -T0 IP        # Paranoid — very slow, very stealthy
-nmap -T1 IP        # Sneaky
-nmap -T2 IP        # Polite
-nmap -T3 IP        # Normal (default)
-nmap -T4 IP        # Aggressive — faster
-nmap -T5 IP        # Insane — fastest but may miss things
-⚠️ Higher speed = higher inaccuracy. Use T5 at your own risk.
+nmap -sT target
+```
 
-Fine‑tuning without templates:
+---
 
-bash
---min-rate 1000           # Send at least 1000 packets/sec
---max-retries 2           # Retry only twice
---host-timeout 15m        # Abort after 15 minutes
---scan-delay 1s           # Wait 1 second between probes
-Output Flags
-bash
-nmap -oN output.txt IP     # Normal format — human readable
-nmap -oG output.txt IP     # Grepable format — easy to grep/filter
-nmap -oA output IP         # All formats at once (saves .nmap, .gnmap, .xml)
-💡 Always save your scan output! You only need to run the scan once — saves time and reduces detection risk.
+## SYN Scan (-sS)
 
-Script Flags (NSE)
-bash
-nmap --script IP              # Run a specific script
-nmap --script=vuln IP         # Run all vulnerability scripts
-nmap --script=http-title IP   # Get HTTP page titles
-nmap --script=banner IP       # Grab service banners
-NSE — Nmap Scripting Engine (Deep Dive)
-NSE scripts are Lua scripts organized into categories:
+Also called a **Half-Open Scan**.
 
-Category	Safety	Example scripts
-safe	✅ Won't crash	http-title, ssh-hostkey
-intrusive	⚠️ May affect service	http-slowloris
-vuln	🟡 Checks vulns	smb-vuln-ms17-010
-exploit	🔴 Actually exploits	http-shellshock
-auth	🔑 Auth bypass	ftp-anon
-brute	🔓 Brute‑force	ssh-brute
-discovery	🌐 Info gathering	smb-os-discovery
-dos	⚠️ May cause downtime	teardrop
-bash
-nmap --script "safe or default" 10.10.10.1
-nmap --script "vuln and not intrusive" 10.10.10.1
-nmap --script "http-*" 10.10.10.1
-Port States
-State	Meaning
-open	Service is actively accepting connections
-closed	Port accessible but no service listening
-filtered	Firewall blocking — Nmap can't tell if open or closed
-open|filtered	Can't determine — usually UDP scans
-closed|filtered	Can't determine state
-Firewall & IDS Evasion
-Technique	Flag	Explanation
-Decoys	-D RND:5,ME	Hides your real IP
-Fragmentation	-f	Splits packets into tiny fragments
-MTU	--mtu 16	Manual fragment size
-Source port spoof	--source-port 53	Pretend to be DNS
-Randomize hosts	--randomize-hosts	Scan in random order
-MAC spoof	--spoof-mac 0	Random MAC address
-Idle (zombie) scan	-sI zombie:port	No direct contact – ultimate stealth
-Combining Flags — Real World Examples
-bash
-# Most common CTF scan
-nmap -sV -sC -p- target_ip
+```text
+Client → SYN
+Server → SYN-ACK
+Client → RST
+```
 
-# Aggressive full scan
-nmap -A -p- target_ip
+Connection is never completed.
 
-# Stealthy SYN scan with version detection
-nmap -sS -sV -T2 target_ip
+### Advantages
 
-# Quick scan of top 1000 ports with OS detection
-nmap -O -sV target_ip
+* Faster
+* Stealthier
+* Less logging
 
-# Full aggressive scan saved to all formats
-nmap -A -p- -oA full_scan target_ip
+### Disadvantages
 
-# Vulnerability scan
-nmap --script=vuln target_ip
+* Requires root/admin privileges
 
-# Scan whole network for live hosts
-nmap -sn 192.168.1.0/24
+```bash
+nmap -sS target
+```
 
-# UDP heavy scan
-nmap -sU -p 53,123,161,67,68 target_ip
+---
 
-# Decoy scan
-nmap -D RND:10,10.10.10.1 10.10.10.2
-Recommended Workflow
-bash
-# Step 1 — Discover live hosts
-nmap -sn 192.168.1.0/24 -oA live_hosts
+## UDP Scan (-sU)
 
-# Step 2 — Quick initial scan
-nmap --top-ports 1000 -sV -oA quick target_ip
+Used to discover UDP services.
 
-# Step 3 — Full port scan
-nmap -p- -T4 -oA full_tcp target_ip
+```bash
+nmap -sU target
+```
 
-# Step 4 — Deep scan on discovered ports
-nmap -sV -sC -p 22,80,443 target_ip -oA deep
+Common UDP services:
 
-# Step 5 — Vulnerability scan
-nmap --script=vuln -p 22,80,443 target_ip -oA vuln
-Important Port Numbers to Know
-Port	Service	Why It Matters
-21	FTP	Anonymous login, bounce attack
-22	SSH	Brute‑force, default creds
-23	Telnet	Cleartext credentials
-25	SMTP	User enumeration, open relay
-53	DNS	Zone transfer attacks
-80	HTTP	Web app attacks
-139/445	SMB	EternalBlue, pass‑the‑hash
-443	HTTPS	Web app + TLS attacks
-3306	MySQL	Default creds, SQL injection
-3389	RDP	BlueKeep, brute‑force
-5432	PostgreSQL	Default creds, RCE
-27017	MongoDB	No‑auth default
-🔐 Why This Matters in Hacking
-First step in every pentest: Nmap is always the first tool run on a target — reconnaissance before any exploitation
+| Port  | Service |
+| ----- | ------- |
+| 53    | DNS     |
+| 67/68 | DHCP    |
+| 123   | NTP     |
+| 161   | SNMP    |
 
-Version detection (-sV): knowing Apache 2.4.49 is running = you can search CVEs for that exact version
+### Drawback
 
-OS detection (-O): Windows vs Linux changes your entire attack approach
+UDP scanning is significantly slower than TCP scanning.
 
--sS SYN scan: doesn't complete the handshake = doesn't appear in application logs — stealthier than -sT
+---
 
--p- full port scan: admins often run services on non-standard ports thinking nobody will find them — -p- finds them all
+# Advanced Scan Types
 
---script=vuln: automates vulnerability checking — finds EternalBlue, Heartbleed, and other known vulns automatically
+| Scan        | Flag | Purpose                   |
+| ----------- | ---- | ------------------------- |
+| Null Scan   | -sN  | Sends no flags            |
+| FIN Scan    | -sF  | Sends FIN only            |
+| Xmas Scan   | -sX  | Sends FIN, PSH, URG       |
+| Maimon Scan | -sM  | FIN + ACK                 |
+| ACK Scan    | -sA  | Firewall mapping          |
+| Window Scan | -sW  | ACK variation             |
+| Idle Scan   | -sI  | Zombie-based stealth scan |
+| Ping Scan   | -sn  | Host discovery only       |
 
-Always save output (-oA): in real pentests you can't rescan — it causes noise and may alert the blue team
+> **Note:** Null, FIN, and Xmas scans are ineffective against Windows systems because Windows typically responds with RST regardless of port state.
 
--T timing: in real engagements use T1 or T2 — slow = stealthy. CTFs use T4-T5 — speed matters more
+---
 
-Quick Cheat Sheet (Printable)
-bash
-# BASICS
-nmap target               # Default scan (TCP 1000 ports)
-nmap -sS target           # SYN stealth (root)
-nmap -sT target           # TCP connect (no root)
+# Port State Responses
 
-# PORT SELECTION
+| Scan Type     | Open Port      | Closed Port |
+| ------------- | -------------- | ----------- |
+| SYN (-sS)     | SYN-ACK → RST  | RST         |
+| Connect (-sT) | Full Handshake | RST         |
+| Null (-sN)    | No Response    | RST         |
+| FIN (-sF)     | No Response    | RST         |
+| Xmas (-sX)    | No Response    | RST         |
+| ACK (-sA)     | RST            | RST         |
+
+---
+
+# Scan Type Flags
+
+```bash
+nmap -sS target    # SYN Scan
+nmap -sT target    # TCP Connect Scan
+nmap -sU target    # UDP Scan
+nmap -sn target    # Host Discovery Only
+```
+
+---
+
+# Port Selection
+
+### Single Port
+
+```bash
 nmap -p 80 target
-nmap -p- target
+```
+
+### Multiple Ports
+
+```bash
+nmap -p 22,80,443 target
+```
+
+### Port Range
+
+```bash
 nmap -p 1-1000 target
+```
+
+### All Ports
+
+```bash
+nmap -p- target
+```
+
+### Top Ports
+
+```bash
+nmap --top-ports 100 target
+```
+
+---
+
+# Detection Flags
+
+## Service Version Detection
+
+```bash
+nmap -sV target
+```
+
+Example Output:
+
+```text
+Apache httpd 2.4.49
+OpenSSH 8.2
+```
+
+---
+
+## Operating System Detection
+
+```bash
+nmap -O target
+```
+
+Attempts to determine:
+
+* Linux
+* Windows
+* BSD
+* Network devices
+
+---
+
+## Aggressive Scan
+
+```bash
+nmap -A target
+```
+
+Includes:
+
+* OS Detection
+* Version Detection
+* NSE Scripts
+* Traceroute
+
+---
+
+# Verbosity
+
+### Verbose
+
+```bash
+nmap -v target
+```
+
+### Very Verbose
+
+```bash
+nmap -vv target
+```
+
+Useful for monitoring long scans.
+
+---
+
+# Timing Templates
+
+| Flag | Name       | Speed     |
+| ---- | ---------- | --------- |
+| -T0  | Paranoid   | Slowest   |
+| -T1  | Sneaky     | Very Slow |
+| -T2  | Polite     | Slow      |
+| -T3  | Normal     | Default   |
+| -T4  | Aggressive | Fast      |
+| -T5  | Insane     | Fastest   |
+
+```bash
+nmap -T4 target
+```
+
+> Higher speed generally increases the chance of missing results.
+
+---
+
+# Fine-Tuning Performance
+
+```bash
+--min-rate 1000
+--max-retries 2
+--host-timeout 15m
+--scan-delay 1s
+```
+
+Example:
+
+```bash
+nmap -sS --min-rate 1000 target
+```
+
+---
+
+# Saving Output
+
+## Normal Output
+
+```bash
+nmap -oN output.txt target
+```
+
+## Grepable Output
+
+```bash
+nmap -oG output.txt target
+```
+
+## All Formats
+
+```bash
+nmap -oA scan_results target
+```
+
+Creates:
+
+```text
+scan_results.nmap
+scan_results.gnmap
+scan_results.xml
+```
+
+> Always save your scans to avoid rescanning targets.
+
+---
+
+# NSE — Nmap Scripting Engine
+
+NSE uses Lua scripts to automate discovery and vulnerability checks.
+
+---
+
+## Default Scripts
+
+```bash
+nmap -sC target
+```
+
+---
+
+## Vulnerability Scan
+
+```bash
+nmap --script=vuln target
+```
+
+---
+
+## HTTP Title Enumeration
+
+```bash
+nmap --script=http-title target
+```
+
+---
+
+## Banner Grabbing
+
+```bash
+nmap --script=banner target
+```
+
+---
+
+# NSE Categories
+
+| Category  | Purpose                    |
+| --------- | -------------------------- |
+| safe      | Safe information gathering |
+| default   | Common default scripts     |
+| auth      | Authentication testing     |
+| brute     | Brute-force attacks        |
+| discovery | Information gathering      |
+| vuln      | Vulnerability checks       |
+| intrusive | Potentially disruptive     |
+| exploit   | Exploitation scripts       |
+| dos       | Denial-of-Service testing  |
+
+Examples:
+
+```bash
+nmap --script "safe or default" target
+```
+
+```bash
+nmap --script "vuln and not intrusive" target
+```
+
+```bash
+nmap --script "http-*" target
+```
+
+---
+
+# Port States
+
+| State           | Meaning                     |
+| --------------- | --------------------------- |
+| open            | Service accepts connections |
+| closed          | No service listening        |
+| filtered        | Firewall blocks access      |
+| open|filtered   | State cannot be determined  |
+| closed|filtered | State cannot be determined  |
+
+---
+
+# Firewall & IDS Evasion
+
+| Technique            | Flag              |
+| -------------------- | ----------------- |
+| Decoys               | -D                |
+| Fragmentation        | -f                |
+| Custom MTU           | --mtu             |
+| Source Port Spoofing | --source-port     |
+| Random Host Order    | --randomize-hosts |
+| MAC Spoofing         | --spoof-mac       |
+| Idle Scan            | -sI               |
+
+Examples:
+
+```bash
+nmap -D RND:5,ME target
+```
+
+```bash
+nmap -f target
+```
+
+```bash
+nmap --source-port 53 target
+```
+
+---
+
+# Real-World Examples
+
+## CTF Enumeration
+
+```bash
+nmap -sV -sC -p- target
+```
+
+## Full Aggressive Scan
+
+```bash
+nmap -A -p- target
+```
+
+## Stealth Scan
+
+```bash
+nmap -sS -sV -T2 target
+```
+
+## Vulnerability Scan
+
+```bash
+nmap --script=vuln target
+```
+
+## Network Discovery
+
+```bash
+nmap -sn 192.168.1.0/24
+```
+
+## Common UDP Services
+
+```bash
+nmap -sU -p 53,67,68,123,161 target
+```
+
+---
+
+# Recommended Pentesting Workflow
+
+## Step 1 — Discover Live Hosts
+
+```bash
+nmap -sn 192.168.1.0/24 -oA live_hosts
+```
+
+## Step 2 — Quick Scan
+
+```bash
+nmap --top-ports 1000 -sV -oA quick target
+```
+
+## Step 3 — Full TCP Scan
+
+```bash
+nmap -p- -T4 -oA full_tcp target
+```
+
+## Step 4 — Deep Enumeration
+
+```bash
+nmap -sV -sC -p 22,80,443 target -oA deep
+```
+
+## Step 5 — Vulnerability Checks
+
+```bash
+nmap --script=vuln -p 22,80,443 target -oA vuln
+```
+
+---
+
+# Why Nmap Matters
+
+### Reconnaissance
+
+Every penetration test begins with Nmap.
+
+### Version Detection
+
+Knowing a service version allows targeted vulnerability research.
+
+Example:
+
+```text
+Apache 2.4.49
+```
+
+Searching for known CVEs becomes possible.
+
+### Operating System Detection
+
+Attack strategies differ greatly between:
+
+* Windows
+* Linux
+* BSD
+* Network appliances
+
+### Full Port Scans
+
+```bash
+nmap -p- target
+```
+
+Administrators frequently run services on non-standard ports.
+
+### NSE Vulnerability Detection
+
+```bash
+nmap --script=vuln target
+```
+
+Can identify vulnerabilities such as:
+
+* EternalBlue
+* Heartbleed
+* SMB flaws
+* Weak configurations
+
+### Output Management
+
+```bash
+nmap -oA results target
+```
+
+Professional engagements require maintaining evidence and scan records.
+
+---
+
+# Quick Cheat Sheet
+
+```bash
+# BASIC SCANS
+nmap target
+nmap -sS target
+nmap -sT target
+
+# PORTS
+nmap -p 80 target
+nmap -p 1-1000 target
+nmap -p- target
 
 # DETECTION
-nmap -sV target           # Versions
-nmap -O target            # OS
-nmap -A target            # Aggressive
+nmap -sV target
+nmap -O target
+nmap -A target
 
-# SCRIPTING
-nmap -sC target           # Default scripts
+# NSE
+nmap -sC target
 nmap --script=vuln target
-nmap --script http-title target
+nmap --script=http-title target
 
 # OUTPUT
-nmap -oA filename target  # All formats
-nmap -oN filename target  # Normal
+nmap -oA results target
+nmap -oN results.txt target
 
 # TIMING
-nmap -T4 target           # Faster (CTF)
-nmap -T2 target           # Stealthier (prod)
+nmap -T4 target
+nmap -T2 target
 
 # EVASION
-nmap -f target            # Fragment packets
-nmap -D RND:10 target     # Decoys
-nmap -sI zombie target    # Idle scan
+nmap -f target
+nmap -D RND:10 target
+nmap -sI zombie target
 
 # UDP
 nmap -sU target
 nmap -sU -p 53 target
-Happy scanning! 🚀
+```
+
+---
+
+# Final Takeaway
+
+Nmap is the foundation of network reconnaissance and penetration testing.
+
+A practical workflow is:
+
+```text
+Host Discovery
+      ↓
+Quick Scan
+      ↓
+Full Port Scan
+      ↓
+Service Enumeration
+      ↓
+Vulnerability Analysis
+      ↓
+Exploitation
+```
+
+Mastering Nmap means mastering the first phase of almost every cybersecurity assessment.
