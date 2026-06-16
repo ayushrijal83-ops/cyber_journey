@@ -84,7 +84,7 @@ cyber_journey/
 |
 |──2.1-NMAP
 |   |___01-part1.md
-|   |___
+|   |___02-SYN-ACK-SCAN.md
 |   |___
 │
 ├── 03-Python/
