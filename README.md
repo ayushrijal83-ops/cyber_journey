@@ -87,6 +87,7 @@ cyber_journey/
 |   |___02-SYN-ACK-SCAN.md
 |   |___03-TCPIP scan.md
 |   |____04-UDP-scan.md
+|   |___05-nmap-null-fin-xmas-icmp.md
 │
 ├── 03-Python/
 │   └── scripts/
