@@ -88,6 +88,7 @@ cyber_journey/
 |   |___03-TCPIP scan.md
 |   |____04-UDP-scan.md
 |   |___05-nmap-null-fin-xmas-icmp.md
+|   |___06-NMAP-sCRIPTING.md
 │
 ├── 03-Python/
 │   └── scripts/
