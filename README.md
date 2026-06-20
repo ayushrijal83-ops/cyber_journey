@@ -89,6 +89,7 @@ cyber_journey/
 |   |____04-UDP-scan.md
 |   |___05-nmap-null-fin-xmas-icmp.md
 |   |___06-NMAP-sCRIPTING.md
+|   |___07-nmap-firewall-evasion.md
 │
 ├── 03-Python/
 │   └── scripts/
