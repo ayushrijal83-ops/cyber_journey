@@ -91,9 +91,14 @@ cyber_journey/
 │   └── notes/
 │
 └── Projects/
-    ├── project-01/
-    ├── project-02/
-    └── project-03/
+|   ├── project-01/
+|   ├── project-02/
+|   └── project-03/
+|
+|___practice saturday/
+    |___
+    |___
+    |___
 ```
 
 ---
