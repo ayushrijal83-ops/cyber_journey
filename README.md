@@ -62,7 +62,7 @@ cyber_journey/
 │
 ├── 01-Linux/
 │   ├── notes/            → 15 topics, fully documented
-│   └── practice/         → Bandit writeup (methodology only)
+│   └── practice/         → Bandit writeup (methodology only)jla
 │
 ├── 02-Networking/
 │   └── notes/            → Switches, routing, OSI, IP, subnetting (10 topics)
