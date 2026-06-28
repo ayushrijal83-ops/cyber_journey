@@ -41,8 +41,8 @@ Just consistency, curiosity, and a terminal.
 |---|---|---|---|
 | 1 | 🐧 Linux Basics | Terminal, permissions, SSH, services, Bandit | ✅ **Completed** |
 | 2 | 🌐 Networking Theory | TCP/IP, DNS, OSI model, subnetting | ✅ **Completed** |
-| 3 | 🐍 Python | Scripting, sockets, automation, building tools | 🔄 **In Progress** |
-| 4 | 🕷️ Web Security | OWASP Top 10, SQLi, XSS, PortSwigger Academy | ⏳ Upcoming |
+| 3 | 🐍 Python | Scripting, sockets, automation, building tools | **skip>** |
+| 4 | 🕷️ Web Security | OWASP Top 10, SQLi, XSS, PortSwigger Academy | 🔄 **In Progress**| 
 | 5 | ⬆️ Privilege Escalation | Linux & Windows privesc (TCM Security) | ⏳ Upcoming |
 | 6 | 🏢 Active Directory | Kerberoasting, pass-the-hash, BloodHound | ⏳ Upcoming |
 | 7 | 🛠️ Tools Mastery | Deep-dive: Nmap, Wireshark, Burp Suite, Metasploit | ⏳ Upcoming |
